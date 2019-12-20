@@ -1,0 +1,2 @@
+class TickItem(object):
+    pass
