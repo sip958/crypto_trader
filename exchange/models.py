@@ -34,3 +34,8 @@ class Symbol(models.Model):
 
     def __str__(self):
         return f"<Symbol: {self.base}_{self.quote}>"
+
+
+def symbol_str_2_orm(symbol_str: str) -> Symbol:
+    base, quote = symbol_str.split("_")
+    return Symbol.objects.get(base__name__iexact=base, quote__name__iexact=quote)

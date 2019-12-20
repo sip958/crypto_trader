@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from django.utils import timezone
+
 from enums.symbol import SymbolFormatEnum
 
 
@@ -24,3 +28,11 @@ def symbol_format_convert(s, from_format: SymbolFormatEnum, to_format: SymbolFor
             return result if to_format is SymbolFormatEnum.LOWER_UNDERSCORE else result.upper()
         else:
             return s
+
+
+def ts_to_dt(ts):
+    tz = timezone.get_default_timezone()
+
+    dt = datetime.fromtimestamp(ts)
+    dt = timezone.make_aware(dt, tz)
+    return dt

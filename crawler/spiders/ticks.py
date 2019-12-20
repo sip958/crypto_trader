@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
-from datetime import datetime
-from decimal import Decimal
 
 import scrapy
-from django.utils import timezone
 from scrapy import Request
 
 from crawler.items import TickItem
@@ -33,7 +30,7 @@ class TicksSpider(scrapy.Spider):
                 yield Request(
                     ticks_url,
                     meta={
-                        "exchange_orm_obj": ex.exchange_orm_obj,
+                        "exchange": ex,
                         "symbol": Symbol.objects.get(base__name__iexact=base, quote__name__iexact=quote)
                     }
                 )
@@ -41,27 +38,18 @@ class TicksSpider(scrapy.Spider):
     def parse(self, response):
         resp = json.loads(response.body_as_unicode())
 
-        for d in resp["data"]:
-            for tick in d["data"]:
+        exchange = response.meta["exchange"]
+        symbol = response.meta["symbol"]
 
-                item = TickItem()
+        ticks = exchange.format_ticks(resp, symbol=symbol)
 
-                _price = Decimal(tick["price"])
-                _amount = Decimal(tick["amount"])
+        for tick in ticks:
+            item = TickItem()
+            item["exchange"] = tick.exchange
+            item["symbol"] = tick.symbol
+            item["trade_time"] = tick.trade_time
+            item["price"] = tick.price
+            item["amount"] = tick.amount
+            item["value"] = tick.value
 
-                item["exchange"] = response.meta["exchange_orm_obj"]
-                item["symbol"] = response.meta["symbol"]
-                item["trade_time"] = self.ts_to_dt(tick["ts"] / 1000)
-                item["price"] = _price
-                item["amount"] = _amount
-                item["value"] = _price * _amount
-
-                yield item
-
-    @staticmethod
-    def ts_to_dt(ts):
-        tz = timezone.get_default_timezone()
-
-        dt = datetime.fromtimestamp(ts)
-        dt = timezone.make_aware(dt, tz)
-        return dt
+            yield item

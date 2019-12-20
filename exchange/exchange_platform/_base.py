@@ -27,7 +27,7 @@ class BasePlatform(object):
         )
         return symbol_str
 
-    async def format_ticks(self, *args, **kwargs):
+    def format_ticks(self, *args, **kwargs):
         raise NotImplementedError
 
     def build_ticks_url(self, *args, **kwargs):
