@@ -14,8 +14,9 @@ class TicksSpider(scrapy.Spider):
     def start_requests(self):
 
         from exchange.exchange_platform.huobi import Huobi
+        from exchange.exchange_platform.fcoin import FCoin
 
-        exchanges = [Huobi]
+        exchanges = [Huobi, FCoin]
         symbols = ["BTC_USDT"]
 
         for exchange in exchanges:
@@ -24,6 +25,8 @@ class TicksSpider(scrapy.Spider):
 
             for symbol in symbols:
                 ticks_url = ex.build_ticks_url(symbol)
+
+                self.log(f"ticks url of {ex} is: {ticks_url}")
 
                 base, quote = symbol.split("_")
 
