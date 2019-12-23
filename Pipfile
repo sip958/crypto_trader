@@ -14,6 +14,7 @@ scrapyd = "*"
 scrapyd-client = "*"
 scrapy-djangoitem = "*"
 mysqlclient = "==1.4.4"
+arrow = "*"
 
 [requires]
 python_version = "3.7"

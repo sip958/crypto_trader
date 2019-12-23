@@ -1,0 +1,16 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{#{% block extrahead %}#}
+{#{{ block.super }}#}
+{#<link href="https://cdn.bootcss.com/bulma/0.7.5/css/bulma.min.css" rel="stylesheet">#}
+{#{% endblock %}#}
+
+
+{% block content %}
+
+    <h1>BTC_USDT @ Huobi: {{ cl.result_count }}</h1>
+
+    <!-- Render the rest of the ChangeList view by calling block.super -->
+    {{ block.super }}
+{% endblock %}
