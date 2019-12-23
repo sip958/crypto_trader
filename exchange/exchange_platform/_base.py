@@ -3,6 +3,7 @@ from typing import Optional
 from common.utils import symbol_format_convert
 from enums.symbol import SymbolFormatEnum
 from exchange.models import Exchange
+from exchange.websocket_observable._base import BaseWsObservable
 
 
 class BasePlatform(object):
@@ -16,6 +17,9 @@ class BasePlatform(object):
         if obj is None:
             obj = Exchange.objects.get(name__iexact=self.__class__.__name__)
         self.exchange_orm_obj = obj
+
+    def set_websocket_observable(self, observable: BaseWsObservable) -> None:
+        self.websocket_observable = observable
 
     def build_symbol_str(self, symbol_str):
         to_format = getattr(SymbolFormatEnum, self.exchange_orm_obj.symbol_format)

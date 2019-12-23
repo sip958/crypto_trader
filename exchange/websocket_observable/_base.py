@@ -10,13 +10,19 @@ class BaseWsObservable(object):
     ws_conn = None
     _is_ws_connected = False
 
+    def __init__(self):
+        self.observers = []
+
+    def attach_observer(self, o):
+        self.observers.append(o)
+
     async def initialize(self):
         raise NotImplementedError
 
     async def get_url(self):
         raise NotImplementedError
 
-    async def connect_ws(self):
+    async def connect(self):
         url = await self.get_url()
         try:
             logger.info("creating websocket connection, uri: {}.".format(url))
