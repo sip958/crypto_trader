@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "crypto_trader"
+version = "0.1.0"
+description = ""
+authors = ["Xu Qingjian <sean.xu@dfgroup.pro>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+django = "<3"
+websockets = "^8.1"
+scrapy = "^1.8"
+spiderkeeper = "^1.2"
+scrapyd = "^1.2"
+scrapyd-client = "^1.1"
+scrapy-djangoitem = "^1.1"
+mysqlclient = "^1.4.4"
+arrow = "^0.15.4"
+aiohttp = "^3.6"
+matplotlib = "^3.1"
+pandas = "^0.25.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+
+[build-system]
