@@ -33,22 +33,25 @@ async def main(observable, symbol, exchange):
             _price = Decimal(order["price"])
             _amount = Decimal(order["size"])
 
-            self.orm_cache.append(Order(
-                exchange=exchange,
-                symbol=symbol,
-                sequence=order["sequence"],
-                order_id=order["orderId"],
-                side=OrderSideEnum.SELL.name if order["side"] == "sell" else OrderSideEnum.BUY.name,
-                time=ts_to_dt(int(order["time"]) / 10 ** 9),
-                price=_price,
-                amount=_amount,
-                value=_price * _amount,
-            ))
+            try:
+                self.orm_cache.append(Order(
+                    exchange=exchange,
+                    symbol=symbol,
+                    sequence=order["sequence"],
+                    order_id=order["orderId"],
+                    side=OrderSideEnum.SELL.name if order["side"] == "sell" else OrderSideEnum.BUY.name,
+                    time=ts_to_dt(int(order["time"]) / 10 ** 9),
+                    price=_price,
+                    amount=_amount,
+                    value=_price * _amount,
+                ))
+            except Exception as e:
+                logger.error(e)
+            finally:
+                if len(self.orm_cache) >= 50:
+                    Order.objects.bulk_create(self.orm_cache, ignore_conflicts=True)
 
-            if len(self.orm_cache) >= 50:
-                Order.objects.bulk_create(self.orm_cache, ignore_conflicts=True)
-
-                self.orm_cache = []
+                    self.orm_cache = []
 
     count_before_fetch = Order.objects.filter(exchange=exchange, symbol=symbol).count()
 
