@@ -30,10 +30,11 @@ async def main(observable, symbol, exchange):
             if order["type"] in ["received", "match", "done", "change"]:
                 return
 
-            _price = Decimal(order["price"])
-            _amount = Decimal(order["size"])
-
             try:
+
+                _price = Decimal(order["price"])
+                _amount = Decimal(order["size"])
+
                 self.orm_cache.append(Order(
                     exchange=exchange,
                     symbol=symbol,

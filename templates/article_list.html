@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            {% for article in articles %}
+                <div class="content is-medium is-family-monospace">
+                    <a href="{% url "article-detail" article.pk %}">
+                        <span class="title is-1 has-text-centered">{{ article.title }}</span><span>{{ article.created }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

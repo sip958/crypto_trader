@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load custom_markdown %}
+
+{% block content %}
+    <section class="section is-family-monospace">
+        <div class="container">
+
+            <p class="title is-1 has-text-centered">{{ title }}</p>
+
+            <div class="has-text-centered">{{ updated }}</div>
+
+            <div class="container" style="display: flex; justify-content: center; padding-top: 8px; padding-bottom: 10px;">
+                {% if tags %}
+                    <div class="field is-grouped is-grouped-multiline">
+
+                        {% for tag in tags %}
+
+                            <div class="control">
+                                <a href="{% url "tag-detail" tag.pk %}">
+                                    <span class="tag {{ tag.style }}">{{ tag.name }}</span>
+                                </a>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+            </div>
+
+            <div class="content is-medium has-text-justified">
+                {{ content | custom_markdown }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -16,6 +16,8 @@ scrapy-djangoitem = "*"
 mysqlclient = "==1.4.4"
 arrow = "*"
 aiohttp = "*"
+matplotlib = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
