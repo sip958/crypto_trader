@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.conf.locale.en import formats as en_formats
 
 from market.models import Tick, Order
+
+en_formats.DATETIME_FORMAT = 'Y-m-d H:i:s.u'
 
 
 @admin.register(Tick)
