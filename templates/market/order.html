@@ -1,0 +1,160 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+
+    <section class="section is-family-monospace" id="analyze">
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Dataset</label>
+            </div>
+            <div class="field-body">
+
+                <div class="field">
+                    <div class="select is-fullwidth">
+                        <select id="symbol">
+                            {% for symbol in symbols %}
+                                <option base="{{ symbol.base.name }}" quote="{{ symbol.quote.name }}">{{ symbol.base }}_{{ symbol.quote }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="select is-fullwidth">
+                        <select id="exchange">
+                            {% for exchange in exchanges %}
+                                <option name="{{ exchange.name }}">{{ exchange.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Value Range</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-expanded">
+                        <input id="valueLowerBoundInput" class="input" type="number" placeholder="Lower Bound" value="0">
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control is-expanded">
+                        <input id="valueUpperBoundInput" class="input" type="number" placeholder="Upper Bound" value="100">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Value NBINS</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-narrow">
+                        <input id="valueNBinsInput" class="input" type="number" placeholder="Number of bins" value="100">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Quantity Range</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-expanded">
+                        <input id="quantityLowerBoundInput" class="input" type="number" placeholder="Lower Bound" value="0">
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control is-expanded">
+                        <input id="quantityUpperBoundInput" class="input" type="number" placeholder="Upper Bound" value="5">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Quantity NBINS</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-narrow">
+                        <input id="quantityNBinsInput" class="input" type="number" placeholder="Number of bins" value="50">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+                <button class="button is-link is-danger is-rounded" id="analyzeBtn">Analyze</button>
+            </div>
+        </div>
+
+    </section>
+
+    <div id="result">
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    var analyzeButton = document.getElementById("analyzeBtn");
+    var resultSection = document.getElementById("result");
+    function toggleLoading() {
+        analyzeButton.classList.toggle("is-loading");
+    }
+
+    analyzeButton.addEventListener('click', (e) => {
+        toggleLoading();
+        resultSection.innerHTML = "";
+        var symbol = document.getElementById("symbol");
+        var exchange = document.getElementById("exchange");
+        var symbolSelection = symbol.options[symbol.selectedIndex];
+        var exchangeSelection = exchange.options[exchange.selectedIndex];
+        console.log(symbolSelection.getAttribute('base'));
+        console.log(symbolSelection.getAttribute('quote'));
+        console.log(exchangeSelection.getAttribute('name'));
+        var formData = new FormData();
+        formData.append("base", symbolSelection.getAttribute('base'));
+        formData.append("quote", symbolSelection.getAttribute('quote'));
+        formData.append("exchange", exchangeSelection.getAttribute('name'));
+        formData.append("value_lower_bound", document.getElementById("valueLowerBoundInput").value);
+        formData.append("value_upper_bound", document.getElementById("valueUpperBoundInput").value);
+        formData.append("value_nbins", document.getElementById("valueNBinsInput").value);
+        formData.append("quantity_lower_bound", document.getElementById("quantityLowerBoundInput").value);
+        formData.append("quantity_upper_bound", document.getElementById("quantityUpperBoundInput").value);
+        formData.append("quantity_nbins", document.getElementById("quantityNBinsInput").value);
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+        fetch(
+            "{% url "order-report" %}",
+            {
+                body: formData,
+
+                method: 'POST',
+            }
+        ).then(function(response) {
+                return response.json();
+            })
+            .then(function(myJson) {
+                var r = new DOMParser().parseFromString(myJson.html, "text/html")
+                resultSection.innerHTML = r.body.innerHTML;
+                toggleLoading();
+            }).catch(function(exception) {
+                    console.log(exception);
+                    toggleLoading();
+                });
+    });
+{% endblock %}

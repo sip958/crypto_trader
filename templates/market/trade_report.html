@@ -1,0 +1,30 @@
+{% load humanize %}
+
+<p class="title is-1 has-text-centered">Report of {{ symbol.base }}_{{ symbol.quote }} on {{ exchange.name }}</p>
+
+<div class="content is-medium has-text-justified">
+
+    <nav class="level">
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Dataset Size</p>
+                <p class="title">{{ trade_num | intcomma }}</p>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Dataset aggregation:</h1>
+    <div class="table-container">
+        {{ describe | safe }}
+    </div>
+
+    <h1>The Plot of Value Column</h1>
+    <figure class="image container is-16by9">
+        <img src="{{ value_src }}" alt="" height="360" width="640">
+    </figure>
+
+    <h1>The Plot of Quantity Column</h1>
+    <figure class="image container is-16by9">
+        <img src="{{ quantity_src }}" alt="" height="360" width="640">
+    </figure>
+</div>

@@ -27,8 +27,8 @@ class Order(models.Model):
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE)
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
 
-    sequence = models.CharField(max_length=256, unique=True)
-    order_id = models.CharField(max_length=256)
+    sequence = models.CharField(max_length=255, unique=True)
+    order_id = models.CharField(max_length=255)
     side = models.CharField(
         max_length=128,
         choices=((s.name, s.value) for s in OrderSideEnum)

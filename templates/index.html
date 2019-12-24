@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title></title>
+    <title>Monitor Factor Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,17 +36,14 @@
                 Home
             </a>
 
-{#            <a class="navbar-item" href="{% url "tag-list" %}">#}
-{#                Tags#}
-{#            </a>#}
-{##}
-{#            <a class="navbar-item" href="{% url "arbitrage-list" %}">#}
-{#                Arbitrage#}
-{#            </a>#}
-{##}
-{#            <a class="navbar-item" href="{% url "exec-history-list" %}">#}
-{#                ExecHistory#}
-{#            </a>#}
+            <a class="navbar-item" href="{% url "market-trade" %}">
+                Trade
+            </a>
+
+            <a class="navbar-item" href="{% url "market-order" %}">
+                Order
+            </a>
+
         </div>
 
 

@@ -11,8 +11,8 @@ class Currency(models.Model):
 
 
 class Exchange(models.Model):
-    name = models.CharField(max_length=2048)
-    description = models.CharField(max_length=10 ** 5, blank=True)
+    name = models.CharField(max_length=255)
+    description = models.TextField(max_length=16383, blank=True)
     url = models.URLField(blank=True)
 
     symbol_format = models.CharField(
