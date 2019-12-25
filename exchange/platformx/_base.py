@@ -16,6 +16,9 @@ class BasePlatform(object):
     def set_exchange_orm_obj(self, obj: Optional[Exchange] = None) -> None:
         if obj is None:
             obj = Exchange.objects.get(name__iexact=self.__class__.__name__)
+        # self.exchange_controller.orm_obj = obj
+        # ExchangeService.getTicks(self.orm_obj)
+        # self.exchange_controller.getTicks()
         self.exchange_orm_obj = obj
 
     def set_websocket_observable(self, observable: BaseWsObservable) -> None:
