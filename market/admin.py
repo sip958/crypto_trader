@@ -13,7 +13,7 @@ class TickAdmin(admin.ModelAdmin):
 
     list_filter = (
         ("exchange", admin.RelatedOnlyFieldListFilter),
-        ("symbol", admin.RelatedOnlyFieldListFilter),
+        ("symbol", admin.RelatedFieldListFilter),
     )
 
 
@@ -24,6 +24,5 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_filter = (
         ("exchange", admin.RelatedOnlyFieldListFilter),
-        ("symbol", admin.RelatedOnlyFieldListFilter),
+        ("symbol", admin.RelatedFieldListFilter),
     )
-
