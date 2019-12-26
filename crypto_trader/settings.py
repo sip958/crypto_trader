@@ -25,7 +25,7 @@ SECRET_KEY = 'xf)&8h!5040j=z9v3_4ibrsn7!9q=p+t+_qh+@*@a9+mf7m53v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -82,9 +82,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crypto_trader',
         'USER': 'root',
-        'PASSWORD': 'dora1234',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'PASSWORD': os.getenv("MYSQL_PASS", "dora1234"),
+        'HOST': os.getenv("MYSQL_HOST", "127.0.0.1"),
+        'PORT': os.getenv("MYSQL_PORT", "3306"),
     }
 }
 
