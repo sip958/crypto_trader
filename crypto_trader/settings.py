@@ -82,9 +82,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crypto_trader',
         'USER': 'root',
-        'PASSWORD': 'dora1234',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'PASSWORD': os.getenv("MYSQL_PASS", "dora1234"),
+        'HOST': os.getenv("MYSQL_HOST", "127.0.0.1"),
+        'PORT': os.getenv("MYSQL_PORT", "3306"),
     }
 }
 
