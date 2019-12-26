@@ -5,4 +5,4 @@ scrapyd:
 	scrapyd
 
 spiderkeeper:
-	spiderkeeper
+	spiderkeeper --host=scrapyd

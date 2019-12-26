@@ -1,0 +1,8 @@
+dbs
+eggs
+static_files
+db.sqlite3
+SpiderKeeper.db
+ticks.egg
+twistd.pid
+logs
