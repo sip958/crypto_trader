@@ -1,6 +1,8 @@
-FROM harbor-sh.matrix.co/matrix/crypto_trader:v0.2
+FROM harbor-sh.matrix.co/matrix/crypto_trader_base:0.1
 
 WORKDIR /data
-COPY . /data
+ADD . /data
 
-ENTRYPOINT make
+EXPOSE 6800
+
+CMD /bin/bash

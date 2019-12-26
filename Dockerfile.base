@@ -7,11 +7,10 @@ ENV PYTHONFAULTHANDLER=1 \
   PIP_DEFAULT_TIMEOUT=100 \
   POETRY_VERSION=1.0.0
 
-WORKDIR /code
-COPY poetry.lock pyproject.toml /code/
+WORKDIR /data
+
+COPY poetry.lock pyproject.toml /data/
 
 RUN pip install -i https://mirrors.aliyun.com/pypi/simple/  "poetry==$POETRY_VERSION" && \
     poetry config virtualenvs.create false                                     &&   \ 
     poetry install --no-dev --no-interaction --no-ansi
-
-ENTRYPOINT make
