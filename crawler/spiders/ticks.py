@@ -13,9 +13,9 @@ class TicksSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        from exchange.exchange_platform.huobi import Huobi
-        from exchange.exchange_platform.fcoin import FCoin
-        from exchange.exchange_platform.okex import OkEx
+        from exchange.platformx.huobi import Huobi
+        from exchange.platformx.fcoin import FCoin
+        from exchange.platformx.okex import OkEx
 
         exchanges = [Huobi, FCoin, OkEx]
         symbols = ["BTC_USDT"]
