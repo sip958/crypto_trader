@@ -93,3 +93,11 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+"""
+    Configure your download handlers with something custom to override
+    the default https handler
+"""
+DOWNLOAD_HANDLERS = {
+    'https': 'scrapy.core.downloader.handlers.http.HTTPDownloadHandler',
+}
