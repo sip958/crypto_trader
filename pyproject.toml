@@ -9,9 +9,6 @@ python = "^3.7"
 django = "<3"
 websockets = "^8.1"
 scrapy = "^1.8"
-SpiderKeeper = { git = "https://github.com/CSeanXu/SpiderKeeper.git" }
-scrapyd = "^1.2"
-scrapyd-client = "^1.1"
 scrapy-djangoitem = "^1.1"
 mysqlclient = "^1.4.4"
 arrow = "^0.15.4"
@@ -27,5 +24,5 @@ pytest = "^3.0"
 name = "aliyun"
 url = "https://mirrors.aliyun.com/pypi/simple/"
 default = true
-[build-system]
 
+[build-system]
